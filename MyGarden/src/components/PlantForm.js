@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, Picker } from 'react-native';
+import { ScrollView, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { plantUpdate } from '../actions';
-import { CardSection, TextBox, } from './common';
+import { plantUpdate, selectImage } from '../actions';
+import { CardSection, TextBox, Button } from './common';
 
-class EmployeeForm extends Component {
+class PlantForm extends Component {
+    onSelectImageButtonPress() {
+        this.props.selectImage();
+    }
+
     render() {
-        return (<View>
+        return (<ScrollView>
             <CardSection>
                 <TextBox
                     label="Name"
@@ -51,35 +55,32 @@ class EmployeeForm extends Component {
                 <TextBox
                     label="Native range"
                     placeholder="Asia"
-                    onChangeText={value => this.props.plantUpdate({ prop: 'native_range', value })}
-                    value={this.props.native_range}
+                    onChangeText={value => this.props.plantUpdate({ prop: 'nativeRange', value })}
+                    value={this.props.nativeRange}
                     />
             </CardSection>
             <CardSection>
                 <TextBox
                     label="Habitat"
-                    placeholder="Asia"
-                    onChangeText={value => this.props.plantUpdate({ prop: 'native_range', value })}
-                    value={this.props.native_range}
+                    placeholder="Cool temperature and high winds"
+                    onChangeText={value => this.props.plantUpdate({ prop: 'habitat', value })}
+                    value={this.props.habitat}
                     />
             </CardSection>
-            <CardSection style={{ flexDirection: 'column' }}>
-                <Text style={styles.pickerTextStyle}>Shift</Text>
-                <Picker
-                    style={{ flex: 1 }}
-                    onValueChange={value => this.props.plantUpdate({ prop: 'shift', value })}
-                    selectedValue={this.props.shift}
-                    >
-                    <Picker.Item label="Monday" value="Monday" />
-                    <Picker.Item label="Tuesday" value="Tuesday" />
-                    <Picker.Item label="Wednesday" value="Wednesday" />
-                    <Picker.Item label="Thursday" value="Thursday" />
-                    <Picker.Item label="Friday" value="Friday" />
-                    <Picker.Item label="Saturday" value="Saturday" />
-                    <Picker.Item label="Sunday" value="Sunday" />
-                </Picker>
+            <CardSection style={{ flexDirection: 'row' }}>
+                <Text style={styles.pickerTextStyle}>Image</Text>
+                <Button onPress={this.onSelectImageButtonPress.bind(this)}>
+                    Select image
+                </Button>
             </CardSection>
-        </View>);
+            <CardSection
+                style={{
+                    width: 150,
+                    height: 150
+                }}>
+                <Image source={{ uri: this.props.imageUri }} style={styles.imageStyle} />
+            </CardSection>
+        </ScrollView>);
     }
 }
 
@@ -87,12 +88,20 @@ const styles = {
     pickerTextStyle: {
         fontSize: 18,
         paddingLeft: 20
+    },
+    imageStyle: {
+        width: 150,
+        height: 150,
+        alignSelf: 'center'
     }
 };
 
 const mapStateToProps = (state) => {
-    const { name, phone, shift } = state.plantForm;
-    return { name, phone, shift };
+    const { name, description, species, family, color, nativeRange, habitat, imageUri } = state.plantForm;
+    return { name, description, species, family, color, nativeRange, habitat, imageUri };
 };
 
-export default connect(mapStateToProps, { plantUpdate })(EmployeeForm);
+export default connect(mapStateToProps, {
+    plantUpdate,
+    selectImage
+})(PlantForm);

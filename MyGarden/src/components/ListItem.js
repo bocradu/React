@@ -8,7 +8,7 @@ class ListItem extends Component {
         Actions.plantEdit({ plant: this.props.plant });
     }
     render() {
-        const { name, image } = this.props.plant;
+        const { name, imageUri } = this.props.plant;
         const { cardSectionStyle, titleStyle, thumbnailStyle } = styles;
         return (
             <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
@@ -16,7 +16,7 @@ class ListItem extends Component {
                     <CardSection style={cardSectionStyle}>
                         <Image
                             style={thumbnailStyle}
-                            source={{ uri: image }}
+                            source={{ uri: imageUri }}
                             />
                         <Text style={titleStyle}>
                             {name}
@@ -30,8 +30,7 @@ class ListItem extends Component {
 
 const styles = {
     cardSectionStyle: {
-        justifyContent: 'space-around',
-        flexDirection: 'row'
+         flexDirection: 'row'
     },
     titleStyle: {
         fontSize: 18,

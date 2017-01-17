@@ -75,10 +75,6 @@ const styles = {
         fontSize: 20,
         alignSelf: 'center',
         color: 'red'
-    },
-    orTextStyle: {
-        fontSize: 20,
-        alignSelf: 'center',
     }
 };
 

@@ -6,14 +6,18 @@ import {
 
 const INITIAL_STATE = {
     name: '',
-    phone: '',
-    shift: ''
+    descriptio: '',
+    species: '',
+    family: '',
+    color: '',
+    nativeRange: '',
+    habitat: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case PLANT_UPDATE:
-            return { 
+            return {
                 ...state,
                 [action.payload.prop]: action.payload.value
             };

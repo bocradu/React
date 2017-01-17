@@ -21,7 +21,7 @@ const RouterComponent = () => {
                     component={PlantList}
                     key="plantList"
                     onRight={() => Actions.plantCreate()}
-                    rightTitle="Add new plant"
+                    rightTitle="Add"
                     title="My plants"
                     />
                 <Scene

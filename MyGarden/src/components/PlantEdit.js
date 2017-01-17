@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Communications from 'react-native-communications';
 import { plantUpdate, plantSave, plantDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 import PlantForm from './PlantForm';
@@ -16,16 +15,11 @@ class PlantEdit extends Component {
     }
 
     onSaveButtonPress() {
-        const { name, phone, shift } = this.props;
-        this.props.plantSave({ name, phone, shift, uid: this.props.plant.uid });
+        const { name, description, species, family, color, nativeRange, habitat, imageUri } = this.props;
+        this.props.plantSave({ name, description, species, family, color, nativeRange, habitat, imageUri, uid: this.props.plant.uid });
     }
 
-    onTextButtonPress() {
-        const { phone, shift } = this.props;
-        Communications.text(phone, `Your upcoming shift is on ${shift}`);
-    }
-
-    onFireButtonPress() {
+    onDeleteButtonPress() {
         this.changeModalVisibility();
     }
 
@@ -53,13 +47,8 @@ class PlantEdit extends Component {
                     </Button>
                 </CardSection>
                 <CardSection>
-                    <Button onPress={this.onTextButtonPress.bind(this)}>
-                        Text Schedule
-                    </Button>
-                </CardSection>
-                <CardSection>
-                    <Button onPress={this.onFireButtonPress.bind(this)}>
-                        Fire {this.props.name}
+                    <Button onPress={this.onDeleteButtonPress.bind(this)}>
+                        Delete plant {this.props.name}
                     </Button>
                 </CardSection>
                 <Confirm
@@ -67,7 +56,7 @@ class PlantEdit extends Component {
                     onAccept={this.onAccept.bind(this)}
                     onDecline={this.onDecline.bind(this)}
                     >
-                    Are you sure you want to fire {this.props.name}?
+                    Are you sure you want to delete {this.props.name}?
                 </Confirm>
             </Card>
         );
@@ -75,8 +64,8 @@ class PlantEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { name, phone, shift } = state.plantForm;
-    return { name, phone, shift };
+    const { name, description, species, family, color, nativeRange, habitat, imageUri } = state.plantForm;
+    return { name, description, species, family, color, nativeRange, habitat, imageUri };
 };
 
 export default connect(mapStateToProps, {
