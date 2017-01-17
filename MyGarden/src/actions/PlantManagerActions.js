@@ -75,7 +75,8 @@ export const plantSave = ({ name, description, species, family, color, nativeRan
     };
 };
 
-export const plantDelete = ({ uid }) => {
+export const plantDelete = (uid) => {
+    console.log(uid);
     const { currentUser } = firebase.auth();
     return () => {
         firebase.database().ref(`/users/${currentUser.uid}/plants/${uid}`)
