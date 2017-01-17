@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { emailChanged, passwordChanged, loginUser, loginUserWithFacebook } from '../actions';
 import { Card, CardSection, TextBox, Button, Spinner } from './common';
 
 class LoginForm extends Component {
@@ -18,13 +18,27 @@ class LoginForm extends Component {
         this.props.loginUser({ email, password });
     }
 
+    onFacebookButtonPress() {
+        this.props.loginUserWithFacebook();
+    }
+
     renderButton() {
         if (this.props.loading) {
-            return <Spinner size="large" />;
+            return (
+                <CardSection>
+                    <Spinner size="large" />
+                </CardSection>
+            );
         }
-        return (<Button onPress={this.onButtonPress.bind(this)}>
-                    Login
-                </Button>);
+        return (
+            <View>
+                <CardSection>
+                    <Button onPress={this.onButtonPress.bind(this)}>
+                        Login
+                    </Button>
+                </CardSection>
+            </View>
+        );
     }
 
     render() {
@@ -50,11 +64,7 @@ class LoginForm extends Component {
                 <Text style={styles.errorTextStyle}>
                     {this.props.error}
                 </Text>
-                <CardSection>
-
-                    {this.renderButton()}
-                </CardSection>
-
+                {this.renderButton()}
             </Card>
         );
     }
@@ -65,6 +75,10 @@ const styles = {
         fontSize: 20,
         alignSelf: 'center',
         color: 'red'
+    },
+    orTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
     }
 };
 
@@ -81,5 +95,6 @@ const mapStateToProps = ({ auth }) => {
 export default connect(mapStateToProps, {
     emailChanged,
     passwordChanged,
-    loginUser
+    loginUser,
+    loginUserWithFacebook
 })(LoginForm);

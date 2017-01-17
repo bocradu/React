@@ -2,22 +2,22 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
-import { employeeUpdate, employeeSave, employeeDelete } from '../actions';
+import { plantUpdate, plantSave, plantDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
-import EmployeeForm from './EmployeeForm';
+import PlantForm from './PlantForm';
 
 
-class EmployeeEdit extends Component {
+class PlantEdit extends Component {
     state = { showModal: false };
     componentWillMount() {
-        _.each(this.props.employee, (value, prop) => {
-            this.props.employeeUpdate({ prop, value });
+        _.each(this.props.plant, (value, prop) => {
+            this.props.plantUpdate({ prop, value });
         });
     }
 
     onSaveButtonPress() {
         const { name, phone, shift } = this.props;
-        this.props.employeeSave({ name, phone, shift, uid: this.props.employee.uid });
+        this.props.plantSave({ name, phone, shift, uid: this.props.plant.uid });
     }
 
     onTextButtonPress() {
@@ -30,8 +30,8 @@ class EmployeeEdit extends Component {
     }
 
     onAccept() {
-        const { uid } = this.props.employee;
-        this.props.employeeDelete(uid);
+        const { uid } = this.props.plant;
+        this.props.plantDelete(uid);
         this.changeModalVisibility();
     }
 
@@ -46,7 +46,7 @@ class EmployeeEdit extends Component {
     render() {
         return (
             <Card>
-                <EmployeeForm {...this.props} />
+                <PlantForm {...this.props} />
                 <CardSection>
                     <Button onPress={this.onSaveButtonPress.bind(this)}>
                         Save changes
@@ -75,12 +75,12 @@ class EmployeeEdit extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { name, phone, shift } = state.employeeForm;
+    const { name, phone, shift } = state.plantForm;
     return { name, phone, shift };
 };
 
 export default connect(mapStateToProps, {
-    employeeUpdate,
-    employeeSave,
-    employeeDelete
-})(EmployeeEdit);
+    plantUpdate,
+    plantSave,
+    plantDelete
+})(PlantEdit);

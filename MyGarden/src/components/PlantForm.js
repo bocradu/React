@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { employeeUpdate } from '../actions';
+import { plantUpdate } from '../actions';
 import { CardSection, TextBox, } from './common';
 
 class EmployeeForm extends Component {
@@ -11,7 +11,7 @@ class EmployeeForm extends Component {
                 <TextBox
                     label="Name"
                     placeholder="Ion Pop"
-                    onChangeText={value => this.props.employeeUpdate({ prop: 'name', value })}
+                    onChangeText={value => this.props.plantUpdate({ prop: 'name', value })}
                     value={this.props.name}
                     />
             </CardSection>
@@ -19,7 +19,7 @@ class EmployeeForm extends Component {
                 <TextBox
                     label="Phone"
                     placeholder="0723456789"
-                    onChangeText={value => this.props.employeeUpdate({ prop: 'phone', value })}
+                    onChangeText={value => this.props.plantUpdate({ prop: 'phone', value })}
                     value={this.props.phone}
                     />
             </CardSection>
@@ -27,7 +27,7 @@ class EmployeeForm extends Component {
                 <Text style={styles.pickerTextStyle}>Shift</Text>
                 <Picker
                     style={{ flex: 1 }}
-                    onValueChange={value => this.props.employeeUpdate({ prop: 'shift', value })}
+                    onValueChange={value => this.props.plantUpdate({ prop: 'shift', value })}
                     selectedValue={this.props.shift}
                     >
                     <Picker.Item label="Monday" value="Monday" />
@@ -51,8 +51,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-    const { name, phone, shift } = state.employeeForm;
+    const { name, phone, shift } = state.plantForm;
     return { name, phone, shift };
 };
 
-export default connect(mapStateToProps, { employeeUpdate })(EmployeeForm);
+export default connect(mapStateToProps, { plantUpdate })(EmployeeForm);

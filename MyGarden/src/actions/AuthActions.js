@@ -36,6 +36,19 @@ export const loginUser = ({ email, password }) => {
     };
 };
 
+export const loginUserWithFacebook = () => {
+    return (dispatch) => {
+        dispatch({ type: LOGIN_USER });
+        const provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+            .then(user => loginUserSuccess(dispatch, user))
+            .catch((error) => {
+                console.log(error);
+                loginUserFail(dispatch);
+            });
+    };
+};
+
 const loginUserFail = (dispatch) => {
     dispatch({
         type: LOGIN_USER_FAIL
